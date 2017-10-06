@@ -186,8 +186,7 @@ def construct_graph(use_attention=True):
     # Use LSTM cell
   cell = tf.nn.rnn_cell.BasicLSTMCell(lstm_size)
   with tf.variable_scope("seq2seq"):
-    if use_attention:
-      outputs, states = tf.nn.seq2seq.embedding_attention_seq2seq(encoder_inputs,
+      outputs, states = tf.contrib.legacy_seq2seq.embedding_attention_seq2seq(encoder_inputs,
                                                           decoder_inputs,
                                                           cell,
                                                           vocabulary_size, # num_encoder_symbols
@@ -195,21 +194,12 @@ def construct_graph(use_attention=True):
                                                           128, # embedding_size
                                                           feed_previous=feed_previous # False during training, True during testing
                                                           )
-    else: 
-      outputs, states = tf.nn.seq2seq.embedding_rnn_seq2seq(encoder_inputs,
-                                                          decoder_inputs,
-                                                          cell,
-                                                          vocabulary_size, # num_encoder_symbols
-                                                          13, # num_decoder_symbols
-                                                          128, # embedding_size
-                                                          feed_previous=feed_previous # False during training, True during testing
-                                                         )
-  loss = tf.nn.seq2seq.sequence_loss(outputs, labels, weights) 
-  predictions = tf.pack([tf.nn.softmax(output) for output in outputs])
+  loss = tf.contrib.legacy_seq2seq.sequence_loss(outputs, labels, weights) 
+  predictions = tf.stack([tf.nn.softmax(output) for output in outputs])
 
-  tf.scalar_summary('learning rate', learning_rate)
-  tf.scalar_summary('loss', loss)
-  merged = tf.merge_all_summaries()
+  tf.summary.scalar('learning rate', learning_rate)
+  tf.summary.scalar('loss', loss)
+  merged = tf.summary.merge_all()
 
   return encoder_inputs, decoder_inputs, labels, weights, learning_rate, feed_previous, outputs, states, loss, predictions, merged
 
@@ -225,9 +215,9 @@ today = today_dt.strftime("%Y%m%d")
 
 with tf.Session(graph=graph) as sess:
   sess.run(tf.initialize_all_variables())
-  train_writer = tf.train.SummaryWriter('tensorboard/train', graph)
-  test_writer = tf.train.SummaryWriter('tensorboard/test', graph)
-  current_learning_rate = 0.1
+  train_writer = tf.summary.FileWriter('tensorboard/train', graph)
+  test_writer  = tf.summary.FileWriter('tensorboard/test', graph)
+  current_learning_rate = 0.03
 
   for step in range(500001):
     feed_dict = dict()
