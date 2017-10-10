@@ -107,16 +107,15 @@ NDS = 58
 def char2limit(c):
     a = c.lower()
     if a.isalpha():
-        0 + ord(a) - ord('a')
+        return 0 + ord(a) - ord('a')
     elif a.isdigit():
-        ord(a) - ord('0') + 26
+        return ord(a) - ord('0') + 26
     elif a == ' ':
-        36
+        return 36
     elif a == '.':
-        37
+        return 37
     else:
-        36
-            
+        return 36
 
 class BatchGenerator(object):
   def __init__(self, text, batch_size, global_id = 0):
