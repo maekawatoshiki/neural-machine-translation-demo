@@ -59,17 +59,17 @@ def read_data(filename):
     return tf.compat.as_str(f.read(name))
   f.close()
   
-text = read_data(filename)
+text = read_data(filename)[:10000000]
 print('Data size %d' % len(text))
 
 
-test_size = 1004
+test_size = 104
 test_text = text[:test_size]
 train_text = text[test_size:]
 train_size = len(train_text)
 
 # Dictionary
-vocabulary_size = 50000
+vocabulary_size = 500
 def build_dictionary(words):
   count = collections.Counter(words).most_common(vocabulary_size - 2)
   dictionary = dict()
@@ -81,25 +81,42 @@ def build_dictionary(words):
   reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
   return dictionary, reverse_dictionary
 
-if os.path.exists('dicts/dictionary.pickle'):
-  with open('dicts/dictionary.pickle', 'rb') as handle:
+if os.path.exists('dicts/dictionary3.pickle'):
+  with open('dicts/dictionary3.pickle', 'rb') as handle:
     dictionary = pickle.load(handle)
-  with open('dicts/reverse_dictionary.pickle', 'rb') as handle:
+  with open('dicts/reverse_dictionary3.pickle', 'rb') as handle:
     reverse_dictionary = pickle.load(handle)
 else:
   words = train_text.split()
   dictionary, reverse_dictionary = build_dictionary(words)
-  with open('dicts/dictionary.pickle', 'wb') as handle:
+  with open('dicts/dictionary3.pickle', 'wb') as handle:
     pickle.dump(dictionary, handle)
-  with open('dicts/reverse_dictionary.pickle', 'wb') as handle:
+  with open('dicts/reverse_dictionary3.pickle', 'wb') as handle:
     pickle.dump(reverse_dictionary, handle)
 
 # BatchGenerator
 MAX_INPUT_SEQUENCE_LENGTH = 10
 MAX_OUTPUT_SEQUENCE_LENGTH = 20
-PAD_ID = 10
-GO_ID = 11
-EOS_ID = 12
+
+# 26(alpha) + 10(numeric) + 1(space) + 1(period) = 38
+PAD_ID = 38
+GO_ID = 39
+EOS_ID = 40
+NDS = 58
+
+def char2limit(c):
+    a = c.lower()
+    if a.isalpha():
+        0 + ord(a) - ord('a')
+    elif a.isdigit():
+        ord(a) - ord('0') + 26
+    elif a == ' ':
+        36
+    elif a == '.':
+        37
+    else:
+        36
+            
 
 class BatchGenerator(object):
   def __init__(self, text, batch_size, global_id = 0):
@@ -124,7 +141,10 @@ class BatchGenerator(object):
       reverse_input_word_ids = [0]*(MAX_INPUT_SEQUENCE_LENGTH-len(input_word_ids)) + input_word_ids[::-1]
       input_sequence = ' '.join(input_words)
       label_sequence = encode(input_sequence)
-      label_word_ids = [int(num) for num in label_sequence]
+      print(label_sequence)
+      label_word_ids = [char2limit(num) for num in label_sequence]
+      print("success")
+      print(label_word_ids)
       weight = [1.0]*len(label_word_ids)
 
       # append to lists
@@ -149,14 +169,21 @@ test_batches = BatchGenerator(test_text, 1)
 
 # Utils
 def id2num(num_id):
-  if num_id < 10:
-    return str(num_id)
+  if 0 <= num_id and num_id <= 25:
+    return chr(num_id + ord('a'))
+  if 26 <= num_id and num_id <= 35:
+    return chr(num_id - 26 + ord('0'))
+  if num_id == 36:
+    return ' '
+  if num_id == 37:
+    return '.'
   if num_id == PAD_ID:
     return 'P'
   if num_id == GO_ID:
     return 'G'
   if num_id == EOS_ID:
     return 'E'
+  return 'O'
 
 def sampling(predictions):
   return ''.join([id2num(np.argmax(onehot[0])) for onehot in predictions])
@@ -190,7 +217,7 @@ def construct_graph(use_attention=True):
                                                           decoder_inputs,
                                                           cell,
                                                           vocabulary_size, # num_encoder_symbols
-                                                          13, # num_decoder_symbols
+                                                          NDS, # num_decoder_symbols
                                                           128, # embedding_size
                                                           feed_previous=feed_previous # False during training, True during testing
                                                           )
