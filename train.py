@@ -7,6 +7,7 @@ import collections
 import pickle
 from six.moves.urllib.request import urlretrieve
 import datetime
+from itertools import chain
 
 
 # Define language
@@ -51,7 +52,7 @@ def maybe_download(filename, expected_bytes):
       'Failed to verify ' + filename + '. Can you get to it with a browser?')
   return filename
 
-filename = maybe_download('text8.zip', 31344016)
+# filename = maybe_download('text8.zip', 31344016)
 
 def read_data(filename):
   f = zipfile.ZipFile(filename)
@@ -59,11 +60,12 @@ def read_data(filename):
     return tf.compat.as_str(f.read(name))
   f.close()
   
-text = read_data(filename)[:10000000]
+text = open("datasets").read().split('\n')
+text.pop()
 print('Data size %d' % len(text))
+print('data content: %s' % text)
 
-
-test_size = 104
+test_size = 14
 test_text = text[:test_size]
 train_text = text[test_size:]
 train_size = len(train_text)
@@ -81,17 +83,18 @@ def build_dictionary(words):
   reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
   return dictionary, reverse_dictionary
 
-if os.path.exists('dicts/dictionary3.pickle'):
-  with open('dicts/dictionary3.pickle', 'rb') as handle:
+if os.path.exists('dicts/dictionary5.pickle'):
+  with open('dicts/dictionary5.pickle', 'rb') as handle:
     dictionary = pickle.load(handle)
-  with open('dicts/reverse_dictionary3.pickle', 'rb') as handle:
+  with open('dicts/reverse_dictionary5.pickle', 'rb') as handle:
     reverse_dictionary = pickle.load(handle)
 else:
-  words = train_text.split()
+  # print(train_text[0::2]) 
+  words = list(chain.from_iterable([a.split() for a in train_text[0::2]]))
   dictionary, reverse_dictionary = build_dictionary(words)
-  with open('dicts/dictionary3.pickle', 'wb') as handle:
+  with open('dicts/dictionary5.pickle', 'wb') as handle:
     pickle.dump(dictionary, handle)
-  with open('dicts/reverse_dictionary3.pickle', 'wb') as handle:
+  with open('dicts/reverse_dictionary5.pickle', 'wb') as handle:
     pickle.dump(reverse_dictionary, handle)
 
 # BatchGenerator
@@ -117,12 +120,67 @@ def char2limit(c):
     else:
         return 36
 
+# class BatchGenerator(object):
+#   def __init__(self, text, batch_size, global_id = 0):
+#     self._words = text.split()
+#     self._text_size = len(text)
+#     self._batch_size = batch_size
+#     self._global_id = global_id
+#  
+#   def next(self):
+#     input_sequences = list()
+#     encoder_inputs = list()
+#     decoder_inputs = list()
+#     labels = list()
+#     weights = list()
+#
+#     for i in range(self._batch_size):
+#       length = random.randint(1,MAX_INPUT_SEQUENCE_LENGTH)
+#       input_words = self._words[self._global_id:self._global_id+length]
+#       input_word_ids = [word2id(word) for word in input_words]
+#      
+#       # reverse list and add padding
+#       reverse_input_word_ids = [0]*(MAX_INPUT_SEQUENCE_LENGTH-len(input_word_ids)) + input_word_ids[::-1]
+#       input_sequence = ' '.join(input_words)
+#       label_sequence = encode(input_sequence)
+#       # print(label_sequence)
+#       label_word_ids = [char2limit(num) for num in label_sequence]
+#       # print("success")
+#       # print(label_word_ids)
+#       weight = [1.0]*len(label_word_ids)
+#
+#       # append to lists
+#       input_sequences.append(input_sequence)
+#       encoder_inputs.append(reverse_input_word_ids)
+#       decoder_inputs.append([GO_ID] + label_word_ids + [PAD_ID]*(MAX_OUTPUT_SEQUENCE_LENGTH-len(label_word_ids)))
+#       labels.append(label_word_ids + [EOS_ID] + [PAD_ID]*(MAX_OUTPUT_SEQUENCE_LENGTH-len(label_word_ids)))
+#       weights.append(weight + [1.0] + [0.0]*((MAX_OUTPUT_SEQUENCE_LENGTH-len(weight))))
+#
+#       # Update global_id
+#       new_global_id = self._global_id + length
+#       if new_global_id > len(self._words) - self._batch_size*MAX_INPUT_SEQUENCE_LENGTH:
+#         self._global_id = 0
+#       else:
+#         self._global_id = new_global_id
+#
+#     return input_sequences, np.array(encoder_inputs).T, np.array(decoder_inputs).T, np.array(labels).T, np.array(weights).T
+
 class BatchGenerator(object):
-  def __init__(self, text, batch_size, global_id = 0):
-    self._words = text.split()
-    self._text_size = len(text)
+  def __init__(self, text, batch_size):
+    questions_str = text[0::2]
+    answers_str = text[1::2]
+
+    questions = []
+    for q in questions_str:
+        questions.append( [s.lower() for s in q.split()] )
+    answers = []
+    for a in answers_str:
+        answers.append( a )
+    
+    self._questions = questions
+    self._answers   = answers
+
     self._batch_size = batch_size
-    self._global_id = global_id
   
   def next(self):
     input_sequences = list()
@@ -132,18 +190,18 @@ class BatchGenerator(object):
     weights = list()
 
     for i in range(self._batch_size):
-      length = random.randint(1,MAX_INPUT_SEQUENCE_LENGTH)
-      input_words = self._words[self._global_id:self._global_id+length]
+      choice = random.randint(0, len(self._questions) - 1)
+      input_words = self._questions[choice]
       input_word_ids = [word2id(word) for word in input_words]
-      
+      # print(input_words) 
       # reverse list and add padding
       reverse_input_word_ids = [0]*(MAX_INPUT_SEQUENCE_LENGTH-len(input_word_ids)) + input_word_ids[::-1]
       input_sequence = ' '.join(input_words)
-      label_sequence = encode(input_sequence)
-      print(label_sequence)
+      label_sequence = self._answers[choice]
+      # print(label_sequence)
       label_word_ids = [char2limit(num) for num in label_sequence]
-      print("success")
-      print(label_word_ids)
+      # print("success")
+      # print(label_word_ids)
       weight = [1.0]*len(label_word_ids)
 
       # append to lists
@@ -153,16 +211,9 @@ class BatchGenerator(object):
       labels.append(label_word_ids + [EOS_ID] + [PAD_ID]*(MAX_OUTPUT_SEQUENCE_LENGTH-len(label_word_ids)))
       weights.append(weight + [1.0] + [0.0]*((MAX_OUTPUT_SEQUENCE_LENGTH-len(weight))))
 
-      # Update global_id
-      new_global_id = self._global_id + length
-      if new_global_id > len(self._words) - self._batch_size*MAX_INPUT_SEQUENCE_LENGTH:
-        self._global_id = 0
-      else:
-        self._global_id = new_global_id
-
     return input_sequences, np.array(encoder_inputs).T, np.array(decoder_inputs).T, np.array(labels).T, np.array(weights).T
 
-batch_size = 16
+batch_size = 4
 train_batches = BatchGenerator(train_text, batch_size)
 test_batches = BatchGenerator(test_text, 1)
 
