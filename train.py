@@ -10,65 +10,24 @@ import datetime
 from itertools import chain
 
 
-# Define language
-def grammar(length):
-  mygrammar = [1, 0, 2]
-  if length <= 0:
-    raise ValueError('Length should be >= 1') 
-  if length == 1:
-    return [0]
-  if length == 2:
-    return [1,0]
-  for i in range(3,length):
-    if length % 3 == 1 and i == length - 1:
-      next_pos = length - 1
-    else:
-      next_pos = mygrammar[i-3] + 3
-    mygrammar.append(next_pos)
-  return mygrammar
-
-def encode(text):
-  """ Numberize a sequence """
-  words = text.split()
-  new_text = ''
-  for i in grammar(len(words)):
-    new_text += str(len(words[i]))
-  return new_text
-
-
-
-# Data
-url = 'http://mattmahoney.net/dc/'
-def maybe_download(filename, expected_bytes):
-  """Download a file if not present, and make sure it's the right size."""
-  if not os.path.exists(filename):
-    filename, _ = urlretrieve(url + filename, filename)
-  statinfo = os.stat(filename)
-  if statinfo.st_size == expected_bytes:
-    print('Found and verified %s' % filename)
-  else:
-    print(statinfo.st_size)
-    raise Exception(
-      'Failed to verify ' + filename + '. Can you get to it with a browser?')
-  return filename
-
-# filename = maybe_download('text8.zip', 31344016)
-
-def read_data(filename):
-  f = zipfile.ZipFile(filename)
-  for name in f.namelist():
-    return tf.compat.as_str(f.read(name))
-  f.close()
-  
 text = open("datasets").read().split('\n')
 text.pop()
 print('Data size %d' % len(text))
 print('data content: %s' % text)
 
-test_size = 14
-test_text = text[:test_size]
-train_text = text[test_size:]
-train_size = len(train_text)
+train_text = []
+test_text  = []
+flg = False
+for line in text:
+    if line == '=====':
+        flg = True
+        continue
+    if flg:
+        test_text.append(line)
+    else:
+        train_text.append(line)
+print(train_text)
+print(test_text)
 
 # Dictionary
 vocabulary_size = 500
@@ -98,8 +57,8 @@ else:
     pickle.dump(reverse_dictionary, handle)
 
 # BatchGenerator
-MAX_INPUT_SEQUENCE_LENGTH = 10
-MAX_OUTPUT_SEQUENCE_LENGTH = 20
+MAX_INPUT_SEQUENCE_LENGTH = 20
+MAX_OUTPUT_SEQUENCE_LENGTH = 40
 
 # 26(alpha) + 10(numeric) + 1(space) + 1(period) = 38
 PAD_ID = 38
@@ -120,50 +79,6 @@ def char2limit(c):
     else:
         return 36
 
-# class BatchGenerator(object):
-#   def __init__(self, text, batch_size, global_id = 0):
-#     self._words = text.split()
-#     self._text_size = len(text)
-#     self._batch_size = batch_size
-#     self._global_id = global_id
-#  
-#   def next(self):
-#     input_sequences = list()
-#     encoder_inputs = list()
-#     decoder_inputs = list()
-#     labels = list()
-#     weights = list()
-#
-#     for i in range(self._batch_size):
-#       length = random.randint(1,MAX_INPUT_SEQUENCE_LENGTH)
-#       input_words = self._words[self._global_id:self._global_id+length]
-#       input_word_ids = [word2id(word) for word in input_words]
-#      
-#       # reverse list and add padding
-#       reverse_input_word_ids = [0]*(MAX_INPUT_SEQUENCE_LENGTH-len(input_word_ids)) + input_word_ids[::-1]
-#       input_sequence = ' '.join(input_words)
-#       label_sequence = encode(input_sequence)
-#       # print(label_sequence)
-#       label_word_ids = [char2limit(num) for num in label_sequence]
-#       # print("success")
-#       # print(label_word_ids)
-#       weight = [1.0]*len(label_word_ids)
-#
-#       # append to lists
-#       input_sequences.append(input_sequence)
-#       encoder_inputs.append(reverse_input_word_ids)
-#       decoder_inputs.append([GO_ID] + label_word_ids + [PAD_ID]*(MAX_OUTPUT_SEQUENCE_LENGTH-len(label_word_ids)))
-#       labels.append(label_word_ids + [EOS_ID] + [PAD_ID]*(MAX_OUTPUT_SEQUENCE_LENGTH-len(label_word_ids)))
-#       weights.append(weight + [1.0] + [0.0]*((MAX_OUTPUT_SEQUENCE_LENGTH-len(weight))))
-#
-#       # Update global_id
-#       new_global_id = self._global_id + length
-#       if new_global_id > len(self._words) - self._batch_size*MAX_INPUT_SEQUENCE_LENGTH:
-#         self._global_id = 0
-#       else:
-#         self._global_id = new_global_id
-#
-#     return input_sequences, np.array(encoder_inputs).T, np.array(decoder_inputs).T, np.array(labels).T, np.array(weights).T
 
 class BatchGenerator(object):
   def __init__(self, text, batch_size):
@@ -213,7 +128,7 @@ class BatchGenerator(object):
 
     return input_sequences, np.array(encoder_inputs).T, np.array(decoder_inputs).T, np.array(labels).T, np.array(weights).T
 
-batch_size = 4
+batch_size = 16
 train_batches = BatchGenerator(train_text, batch_size)
 test_batches = BatchGenerator(test_text, 1)
 
@@ -280,20 +195,16 @@ def construct_graph(use_attention=True):
 
   return encoder_inputs, decoder_inputs, labels, weights, learning_rate, feed_previous, outputs, states, loss, predictions, merged
 
-graph = tf.Graph()
-with graph.as_default():
-  encoder_inputs, decoder_inputs, labels, weights, learning_rate, feed_previous, outputs, states, loss, predictions, merged = construct_graph()
-  optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
-  saver = tf.train.Saver()
+encoder_inputs, decoder_inputs, labels, weights, learning_rate, feed_previous, outputs, states, loss, predictions, merged = construct_graph()
+optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+saver = tf.train.Saver()
 
 # Run session
 today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
-with tf.Session(graph=graph) as sess:
-  sess.run(tf.initialize_all_variables())
-  train_writer = tf.summary.FileWriter('tensorboard/train', graph)
-  test_writer  = tf.summary.FileWriter('tensorboard/test', graph)
+with tf.Session() as sess:
+  sess.run(tf.global_variables_initializer())
   current_learning_rate = 0.03
 
   for step in range(500001):
@@ -311,9 +222,6 @@ with tf.Session(graph=graph) as sess:
 
     _, current_train_loss, current_train_predictions, train_summary = sess.run([optimizer, loss, predictions, merged], feed_dict=feed_dict)
 
-    train_writer.add_summary(train_summary, step)
-    train_writer.flush()
-    
     if step % 1000 == 0:
       print('Step %d:' % step)
       print('Training set:')
@@ -339,8 +247,6 @@ with tf.Session(graph=graph) as sess:
       print('  Correct output   : ', ''.join([id2num(n) for n in current_test_labels.T[0]]))
       print('  Generated output : ', sampling(current_test_predictions))
       print('='*50)
-      test_writer.add_summary(test_summary, step)
-      test_writer.flush()
         
     if step % 10000 == 0:
         # Save the variables to disk.

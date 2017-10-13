@@ -1,0 +1,31 @@
+how will the weather be
+s w1
+what time is it now
+s t
+what will the weather be like
+s w1
+how will the weather be tomorrow
+s w1
+day after tomorrow
+2
+2 days after tomorrow
+3
+how will the weather be 2 days after tomorrow
+s w3
+tell me what time it is
+s t
+what day it is today
+s d0
+what day will it be tomorrow
+s d1
+if it is sunny tomorrow tell me time
+i e w1 sunny s t
+if it is cloudy tomorrow tell me time
+i e w1 cloudy s t
+=====
+how will the weather be 3 days after tomorrow
+s w4
+what will the weather be like 10 days after tomorrow
+s w11
+if it is rainy tomorrow tell me time
+i e w1 rainy s t
