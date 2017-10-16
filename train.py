@@ -204,7 +204,8 @@ today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
 with tf.Session() as sess:
-  sess.run(tf.global_variables_initializer())
+  saver.restore(sess, "checkpoints/20171016_model-10000steps.ckpt")
+  # sess.run(tf.global_variables_initializer())
   current_learning_rate = 0.03
 
   for step in range(500001):
@@ -248,7 +249,7 @@ with tf.Session() as sess:
       print('  Generated output : ', sampling(current_test_predictions))
       print('='*50)
         
-    if step % 10000 == 0:
+    if step % 5000 == 0:
         # Save the variables to disk.
         save_path = saver.save(sess, "checkpoints/{}_model-{}steps.ckpt".format(today, step))
         print("Model saved in file: %s" % save_path)
