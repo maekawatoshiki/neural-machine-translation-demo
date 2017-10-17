@@ -29,9 +29,9 @@ s d 0
 what day will it be tomorrow
 s d 1
 if it is sunny tomorrow tell me time
-i e w1 sunny s t
+i e w 1 sunny s t
 if it is cloudy tomorrow tell me time
-i e w1 cloudy s t
+i e w 1 cloudy s t
 how will the weather be 3 days after tomorrow
 s w 4
 what will the weather be like 10 days after tomorrow
@@ -39,6 +39,8 @@ s w 11
 if it is rainy tomorrow tell me time
 i e w 1 rainy s t
 =====
+7 days after tomorrow
+8
 how will the weather be
 s w 1
 what time is it now
@@ -70,9 +72,9 @@ s d 0
 what day will it be tomorrow
 s d 1
 if it is sunny tomorrow tell me time
-i e w1 sunny s t
+i e w 1 sunny s t
 if it is cloudy tomorrow tell me time
-i e w1 cloudy s t
+i e w 1 cloudy s t
 how will the weather be 3 days after tomorrow
 s w 4
 what will the weather be like 10 days after tomorrow

@@ -42,18 +42,18 @@ def build_dictionary(words):
   reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
   return dictionary, reverse_dictionary
 
-if os.path.exists('dicts/dictionary5.pickle'):
-  with open('dicts/dictionary5.pickle', 'rb') as handle:
+if os.path.exists('dicts/dictionary9.pickle'):
+  with open('dicts/dictionary9.pickle', 'rb') as handle:
     dictionary = pickle.load(handle)
-  with open('dicts/reverse_dictionary5.pickle', 'rb') as handle:
+  with open('dicts/reverse_dictionary9.pickle', 'rb') as handle:
     reverse_dictionary = pickle.load(handle)
 else:
-  # print(train_text[0::2]) 
-  words = list(chain.from_iterable([a.split() for a in train_text[0::2]]))
+  # print(train_text[4::2]) 
+  words = list(chain.from_iterable([a.split() for a in train_text[4::2]]))
   dictionary, reverse_dictionary = build_dictionary(words)
-  with open('dicts/dictionary5.pickle', 'wb') as handle:
+  with open('dicts/dictionary9.pickle', 'wb') as handle:
     pickle.dump(dictionary, handle)
-  with open('dicts/reverse_dictionary5.pickle', 'wb') as handle:
+  with open('dicts/reverse_dictionary9.pickle', 'wb') as handle:
     pickle.dump(reverse_dictionary, handle)
 
 # BatchGenerator
@@ -84,7 +84,6 @@ class BatchGenerator(object):
   def __init__(self, text, batch_size):
     questions_str = text[0::2]
     answers_str = text[1::2]
-
     questions = []
     for q in questions_str:
         questions.append( [s.lower() for s in q.split()] )
@@ -204,8 +203,8 @@ today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
 with tf.Session() as sess:
-  saver.restore(sess, "checkpoints/20171016_model-10000steps.ckpt")
-  # sess.run(tf.global_variables_initializer())
+  # saver.restore(sess, "checkpoints/20171017_model-5000steps.ckpt")
+  sess.run(tf.global_variables_initializer())
   current_learning_rate = 0.03
 
   for step in range(500001):

@@ -1,3 +1,6 @@
 1. Title - Abstracting the Sentence Meaning from Natural Language using Seq2Seq Model and Attention Mechanism
 2. Introduction - How will the weather be? Probably you can answer. But computers can't.
-3. 
+3. Contents 
+4. About Deep Learning and Seq2Seq and Attention
+5. Result 
+6. Conclusion
