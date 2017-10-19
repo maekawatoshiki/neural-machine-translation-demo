@@ -20,55 +20,20 @@ day after tomorrow
 6
 6 days after tomorrow
 7
-how will the weather be 2 days after tomorrow
-s w 3
-tell me what time it is
-s t
-what day it is today
-s d 0
-what day will it be tomorrow
-s d 1
-if it is sunny tomorrow tell me time
-i e w 1 sunny s t
-if it is cloudy tomorrow tell me time
-i e w 1 cloudy s t
-how will the weather be 3 days after tomorrow
-s w 4
-what will the weather be like 10 days after tomorrow
-s w 11
-if it is rainy tomorrow tell me time
-i e w 1 rainy s t
-=====
-7 days after tomorrow
-8
-how will the weather be
-s w 1
-what time is it now
-s t
-what will the weather be like
-s w 1
-how will the weather be tomorrow
-s w 1
-tomorrow
-1
-day after tomorrow
+2 days later
 2
-2 days after tomorrow
-3
-3 days after tomorrow
-4
-4 days after tomorrow
-5
-5 days after tomorrow
-6
-6 days after tomorrow
-7
+9 days later
+9
+1 days later
+1
 how will the weather be 2 days after tomorrow
 s w 3
 tell me what time it is
 s t
-what day it is today
+what day is it today
 s d 0
+if it will be sunny 5 days later sunny
+i e w 5 sunny s t sunny
 what day will it be tomorrow
 s d 1
 if it is sunny tomorrow tell me time
@@ -81,3 +46,14 @@ what will the weather be like 10 days after tomorrow
 s w 11
 if it is rainy tomorrow tell me time
 i e w 1 rainy s t
+how the weather 5 days later
+s w 5
+=====
+if it is cloudy tomorrow tell me time
+i e w 1 cloudy s t
+if it is sunny 2 days after tomorrow tell me what time
+i e w 3 sunny s t
+if it is rainy tomorrow tell me time
+i e w 1 rainy s t
+how the weather 5 days later
+s w 5
