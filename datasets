@@ -49,11 +49,5 @@ i e w 1 rainy s t
 how the weather 5 days later
 s w 5
 =====
-if it is cloudy tomorrow tell me time
-i e w 1 cloudy s t
-if it is sunny 2 days after tomorrow tell me what time
-i e w 3 sunny s t
-if it is rainy tomorrow tell me time
-i e w 1 rainy s t
-how the weather 5 days later
-s w 5
+if it is cloudy 5 days after tomorrow tell me time
+i e w 5 cloudy s t

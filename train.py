@@ -42,18 +42,20 @@ def build_dictionary(words):
   reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
   return dictionary, reverse_dictionary
 
-if os.path.exists('dicts/dictionary9.pickle'):
-  with open('dicts/dictionary9.pickle', 'rb') as handle:
+if os.path.exists('dicts/dictionary14.pickle'):
+  with open('dicts/dictionary14.pickle', 'rb') as handle:
     dictionary = pickle.load(handle)
-  with open('dicts/reverse_dictionary9.pickle', 'rb') as handle:
+  with open('dicts/reverse_dictionary14.pickle', 'rb') as handle:
     reverse_dictionary = pickle.load(handle)
 else:
-  # print(train_text[4::2]) 
-  words = list(chain.from_iterable([a.split() for a in train_text[4::2]]))
+  words = list(chain.from_iterable([a.split() for a in train_text]))
+  words += list(chain.from_iterable([a.split() for a in test_text]))
+  print("-"*99)
+  print(words)
   dictionary, reverse_dictionary = build_dictionary(words)
-  with open('dicts/dictionary9.pickle', 'wb') as handle:
+  with open('dicts/dictionary14.pickle', 'wb') as handle:
     pickle.dump(dictionary, handle)
-  with open('dicts/reverse_dictionary9.pickle', 'wb') as handle:
+  with open('dicts/reverse_dictionary14.pickle', 'wb') as handle:
     pickle.dump(reverse_dictionary, handle)
 
 # BatchGenerator
@@ -203,7 +205,7 @@ today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
 with tf.Session() as sess:
-  # saver.restore(sess, "checkpoints/20171017_model-5000steps.ckpt")
+  # saver.restore(sess, "checkpoints/20171019_model-5000steps.ckpt")
   sess.run(tf.global_variables_initializer())
   current_learning_rate = 0.03
 
