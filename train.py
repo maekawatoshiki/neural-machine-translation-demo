@@ -30,7 +30,7 @@ print(train_text)
 print(test_text)
 
 # Dictionary
-vocabulary_size = 500
+vocabulary_size = 100
 def build_dictionary(words):
   count = collections.Counter(words).most_common(vocabulary_size - 2)
   dictionary = dict()
@@ -129,7 +129,7 @@ class BatchGenerator(object):
 
     return input_sequences, np.array(encoder_inputs).T, np.array(decoder_inputs).T, np.array(labels).T, np.array(weights).T
 
-batch_size = 16
+batch_size = 8
 train_batches = BatchGenerator(train_text, batch_size)
 test_batches = BatchGenerator(test_text, 1)
 
@@ -188,7 +188,7 @@ def construct_graph(use_attention=True):
                                                           feed_previous=feed_previous # False during training, True during testing
                                                           )
   loss = tf.contrib.legacy_seq2seq.sequence_loss(outputs, labels, weights) 
-  predictions = tf.stack([tf.nn.softmax(output) for output in outputs])
+  predictions = tf.stack([tf.nn.relu(output) for output in outputs])
 
   tf.summary.scalar('learning rate', learning_rate)
   tf.summary.scalar('loss', loss)
@@ -205,8 +205,8 @@ today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
 with tf.Session() as sess:
-  # saver.restore(sess, "checkpoints/20171019_model-5000steps.ckpt")
-  sess.run(tf.global_variables_initializer())
+  saver.restore(sess, "checkpoints/20171024_model-10000steps.ckpt")
+  # sess.run(tf.global_variables_initializer())
   current_learning_rate = 0.03
 
   for step in range(500001):
@@ -224,7 +224,7 @@ with tf.Session() as sess:
 
     _, current_train_loss, current_train_predictions, train_summary = sess.run([optimizer, loss, predictions, merged], feed_dict=feed_dict)
 
-    if step % 1000 == 0:
+    if step % 5 == 0:
       print('Step %d:' % step)
       print('Training set:')
       print('  Loss       : ', current_train_loss)
