@@ -84,8 +84,24 @@ if tomorrow is thursday then how is the weather
 i e d 1 thursday s w 0
 if it is friday tomorow then how is the weather tomorrow
 i e d 1 friday s w 1
+after 10 days 
+10
+after 3 days 
+3
+after 5 days 
+5
+weather 
+w 0
+time 
+t
+what day
+d 0
+7 days after
+7
+the day after today
+1
 =====
-if tomorrow is thursday then how is the weather tomorrow
-i e d 1 thursday s w 1
-what weather tomorrow
-s w 1
+7 days after
+7
+the day after today
+1
