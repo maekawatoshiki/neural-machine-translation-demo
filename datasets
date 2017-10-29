@@ -24,8 +24,26 @@ day after tomorrow
 2
 9 days later
 9
+10 days later
+10
 1 days later
 1
+sunday
+sunday
+monday
+monday
+tuesday
+tuesday
+wednesday
+wednesday
+thursday
+thursday
+friday
+friday
+saturday
+saturday
+what is the weather 10 days later
+s w 10
 how will the weather be 2 days after tomorrow
 s w 3
 tell me what time it is
@@ -48,6 +66,26 @@ if it is rainy tomorrow tell me time
 i e w 1 rainy s t
 how the weather 5 days later
 s w 5
-=====
 if it is cloudy 5 days after tomorrow tell me time
 i e w 5 cloudy s t
+if it is sunday tell me how the weahter will be tomorrow
+i e d 0 sunday s w 1
+if it is monday tell time 
+i e d 0 monday s t
+if it is wednesday tell the time
+i e d 0 wednesday s t
+if it is cloudy 6 days after tomorrow tell me time
+i e w 7 cloudy s t
+if it is saturday tell the time
+i e d 0 saturday s t
+if today is thursday then how is the weather
+i e d 0 thursday s w 0
+if tomorrow is thursday then how is the weather
+i e d 1 thursday s w 0
+if it is friday tomorow then how is the weather tomorrow
+i e d 1 friday s w 1
+=====
+if tomorrow is thursday then how is the weather tomorrow
+i e d 1 thursday s w 1
+what weather tomorrow
+s w 1
