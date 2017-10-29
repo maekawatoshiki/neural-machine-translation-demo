@@ -1,91 +1,173 @@
-how will the weather be
-s w 1
-what time is it now
-s t
-what will the weather be like
-s w 1
+weather 
+w 0
 how will the weather be tomorrow
-s w 1
+w 1
+how will weather be
+w 0
+how the weather tomorrow
+w 1
+what will the weather be 2 days after tomorrow
+w 3
+what will the weather be 3 days after tomorrow
+w 4
+what will the weather be 4 days after tomorrow
+w 5
+what will the weather be 5 days after tomorrow
+w 6
+what will the weather be 6 days after tomorrow
+w 7
 tomorrow
 1
-day after tomorrow
+the day before today
+minus 1
+4 days before tomorrow
+minus 3
+4 days before today
+minus 4
+what is the weather 
+w 0
+what is the weather like
+w 0
+11
+11
+before 10 days
+minus 10
+before 3 days
+minus 3
+tomorrow before 2 days
+minus 1
+the day after 1 day
 2
-2 days after tomorrow
+the day after 2 days
 3
-3 days after tomorrow
+the day after 3 days
 4
-4 days after tomorrow
+the day after 4 days
 5
+the day after 5 days
+6
+the day after 6 days
+7
+the day after 7 days
+8
+the day after 8 days
+9
+the day after 10 days
+11
+the day after 11 days
+12
+the day after 12 days
+13
+the day after 13 days
+14
+the day after 14 days
+15
+the day after 15 days
+16
+the day after 16 days
+17
+the day after 17 days
+18
+the day after 18 days
+19
+the day after 19 days
+20
+the day after 20 days
+21
+the day after 21 days
+22
+the day after 22 days
+23
+the day after 23 days
+24
+7 days after tomorrow
+8
+after 10 days 
+10
+32 days after 10 days
+42
+3 days ago
+minus 3
+after 3 days
+3
+5 days later
+5
+12 days later
+12
 5 days after tomorrow
 6
-6 days after tomorrow
-7
-2 days later
-2
-9 days later
+4 days after tomorrow
+5
+11 days after tomorrow
+12
+11 days after today
+12
+4 days after tomorrow
+5
+8 days after tomorrow
 9
-10 days later
-10
-1 days later
 1
-sunday
-sunday
-monday
-monday
-tuesday
-tuesday
-wednesday
-wednesday
-thursday
-thursday
-friday
-friday
-saturday
-saturday
-what is the weather 10 days later
-s w 10
-how will the weather be 2 days after tomorrow
-s w 3
-tell me what time it is
-s t
-what day is it today
-s d 0
-if it will be sunny 5 days later sunny
-i e w 5 sunny s t sunny
-what day will it be tomorrow
-s d 1
-if it is sunny tomorrow tell me time
-i e w 1 sunny s t
-if it is cloudy tomorrow tell me time
-i e w 1 cloudy s t
-how will the weather be 3 days after tomorrow
-s w 4
-what will the weather be like 10 days after tomorrow
-s w 11
-if it is rainy tomorrow tell me time
-i e w 1 rainy s t
-how the weather 5 days later
-s w 5
-if it is cloudy 5 days after tomorrow tell me time
-i e w 5 cloudy s t
-if it is sunday tell me how the weahter will be tomorrow
-i e d 0 sunday s w 1
-if it is monday tell time 
-i e d 0 monday s t
-if it is wednesday tell the time
-i e d 0 wednesday s t
-if it is cloudy 6 days after tomorrow tell me time
-i e w 7 cloudy s t
-if it is saturday tell the time
-i e d 0 saturday s t
-if today is thursday then how is the weather
-i e d 0 thursday s w 0
-if tomorrow is thursday then how is the weather
-i e d 1 thursday s w 0
-if it is friday tomorow then how is the weather tomorrow
-i e d 1 friday s w 1
+1
+2
+2
+3
+3
+4
+4
+5
+5
+6
+6
+7
+7
+8
+8
+9
+9
+10
+10
+11
+11
+12
+12
+13
+13
+14
+14
+15
+15
+16
+16
+17
+17
+18
+18
+19
+19
+20
+20
+21
+21
+22
+22
+23
+23
+24
+24
+25
+25
+26
+26
+27
+27
+28
+28
+29
+29
 =====
-if tomorrow is thursday then how is the weather tomorrow
-i e d 1 thursday s w 1
-what weather tomorrow
-s w 1
+after 7 days
+7
+the day after 8 days
+9
+what is the weather 10 days later
+w 10

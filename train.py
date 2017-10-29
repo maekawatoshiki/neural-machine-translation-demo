@@ -205,7 +205,7 @@ today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
 with tf.Session() as sess:
-  saver.restore(sess, "checkpoints/20171024_model-10000steps.ckpt")
+  saver.restore(sess, "checkpoints/20171026_model-5000steps.ckpt")
   # sess.run(tf.global_variables_initializer())
   current_learning_rate = 0.03
 
@@ -224,7 +224,7 @@ with tf.Session() as sess:
 
     _, current_train_loss, current_train_predictions, train_summary = sess.run([optimizer, loss, predictions, merged], feed_dict=feed_dict)
 
-    if step % 5 == 0:
+    if step % 20 == 0:
       print('Step %d:' % step)
       print('Training set:')
       print('  Loss       : ', current_train_loss)
