@@ -12,3 +12,11 @@ How about the field of 'natural language'? Do you know AI assistants such as Sir
 If you've ever used it, you know that they give up understanding meanings of a bit hard questions.
 Then I thought I couldn't do something.
 This was exactly the chance I began to do research on making computers abstract meanings of sentences.
+OK, now I'll describe how it seems.
+// ~~~
+This time, I used Seq-to-Seq Model, one of Recurrent Neural Network, to train a computer.
+This model can output variable length data from variable length input data.
+And it's famous for being used in machine translation these years.
+But this model has a problem, which is so bad at training of long inputs.
+In order to make up the problem, Attention Mechanism is used.
+This is to train each correspondence between input and output.

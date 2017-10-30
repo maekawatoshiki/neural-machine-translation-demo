@@ -60,7 +60,7 @@ else:
 
 # BatchGenerator
 MAX_INPUT_SEQUENCE_LENGTH = 20
-MAX_OUTPUT_SEQUENCE_LENGTH = 40
+MAX_OUTPUT_SEQUENCE_LENGTH = 20
 
 # 26(alpha) + 10(numeric) + 1(space) + 1(period) = 38
 PAD_ID = 38
@@ -205,9 +205,9 @@ today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
 with tf.Session() as sess:
-  saver.restore(sess, "checkpoints/20171026_model-5000steps.ckpt")
+  saver.restore(sess, "checkpoints/20171030_model-15000steps.ckpt")
   # sess.run(tf.global_variables_initializer())
-  current_learning_rate = 0.03
+  current_learning_rate = 0.023
 
   for step in range(500001):
     feed_dict = dict()
