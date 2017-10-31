@@ -30,7 +30,7 @@ print(train_text)
 print(test_text)
 
 # Dictionary
-vocabulary_size = 100
+vocabulary_size = 1000
 def build_dictionary(words):
   count = collections.Counter(words).most_common(vocabulary_size - 2)
   dictionary = dict()
@@ -63,10 +63,11 @@ MAX_INPUT_SEQUENCE_LENGTH = 20
 MAX_OUTPUT_SEQUENCE_LENGTH = 20
 
 # 26(alpha) + 10(numeric) + 1(space) + 1(period) = 38
-PAD_ID = 38
-GO_ID = 39
-EOS_ID = 40
-NDS = 58
+dic_len = len(dictionary) 
+PAD_ID = dic_len
+GO_ID  = dic_len + 1
+EOS_ID = dic_len + 2
+NDS    = dic_len + 3
 
 def char2limit(c):
     a = c.lower()
@@ -79,7 +80,7 @@ def char2limit(c):
     elif a == '.':
         return 37
     else:
-        return 36
+        return '?'
 
 
 class BatchGenerator(object):
@@ -91,7 +92,8 @@ class BatchGenerator(object):
         questions.append( [s.lower() for s in q.split()] )
     answers = []
     for a in answers_str:
-        answers.append( a )
+        answers.append( [s.lower() for s in a.split()] )
+        # answers.append( a )
     
     self._questions = questions
     self._answers   = answers
@@ -115,7 +117,8 @@ class BatchGenerator(object):
       input_sequence = ' '.join(input_words)
       label_sequence = self._answers[choice]
       # print(label_sequence)
-      label_word_ids = [char2limit(num) for num in label_sequence]
+      # input_word_ids = [word2id(word) for word in input_words]
+      label_word_ids = [word2id(num) for num in label_sequence]
       # print("success")
       # print(label_word_ids)
       weight = [1.0]*len(label_word_ids)
@@ -135,27 +138,32 @@ test_batches = BatchGenerator(test_text, 1)
 
 # Utils
 def id2num(num_id):
-  if 0 <= num_id and num_id <= 25:
-    return chr(num_id + ord('a'))
-  if 26 <= num_id and num_id <= 35:
-    return chr(num_id - 26 + ord('0'))
-  if num_id == 36:
-    return ' '
-  if num_id == 37:
-    return '.'
+  # if 0 <= num_id and num_id <= 25:
+  #   return chr(num_id + ord('a'))
+  # if 26 <= num_id and num_id <= 35:
+  #   return chr(num_id - 26 + ord('0'))
+  # if num_id == 36:
+  #   return ' '
+  # if num_id == 37:
+  #   return '.'
   if num_id == PAD_ID:
     return 'P'
   if num_id == GO_ID:
     return 'G'
   if num_id == EOS_ID:
     return 'E'
-  return 'O'
+  a = reverse_dictionary.get(num_id, "?")
+  return a + ' '
+  # return 'O'
 
 def sampling(predictions):
   return ''.join([id2num(np.argmax(onehot[0])) for onehot in predictions])
 
 def word2id(word):
     return dictionary.get(word, 0)
+
+def id2word(id):
+    return reverse_dictionary.get(id, "")
 
 # Model
 lstm_size = 256
@@ -205,9 +213,9 @@ today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
 with tf.Session() as sess:
-  saver.restore(sess, "checkpoints/20171030_model-15000steps.ckpt")
+  saver.restore(sess, "checkpoints/20171031_model-10000steps.ckpt")
   # sess.run(tf.global_variables_initializer())
-  current_learning_rate = 0.023
+  current_learning_rate = 0.03
 
   for step in range(500001):
     feed_dict = dict()

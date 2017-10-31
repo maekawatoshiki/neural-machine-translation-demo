@@ -6,17 +6,19 @@ First, look at this sentence. 'HOW WILL THE WEATHER BE'
 OK? If you are human beings, you are able to understand what this sentence means.
 But this is a difficult problem for computers.
 Because this sentence is just a string, so it has no meaning for computers.
-These years, computers have been developing and getting great results even ordinary people know in the feild of image recognion or voice recognition.
+These years, computers have been developing and getting great results even ordinary people know in the feild of image recognition or voice recognition.
 Self-driving cars or voice input are good examples.
 How about the field of 'natural language'? Do you know AI assistants such as Siri or Google Assistant?
 If you've ever used it, you know that they give up understanding meanings of a bit hard questions.
 Then I thought I couldn't do something.
 This was exactly the chance I began to do research on making computers abstract meanings of sentences.
-OK, now I'll describe how it seems.
+OK, now I'll explain how it works.
 // ~~~
 This time, I used Seq-to-Seq Model, one of Recurrent Neural Network, to train a computer.
 This model can output variable length data from variable length input data.
 And it's famous for being used in machine translation these years.
 But this model has a problem, which is so bad at training of long inputs.
-In order to make up the problem, Attention Mechanism is used.
+In order to make up for the problem, Attention Mechanism is used.
 This is to train each correspondence between input and output.
+Herewith, the accuracy of training improves.
+And I used the model given input as sentences in natural language and output as the meaning data in formal language.

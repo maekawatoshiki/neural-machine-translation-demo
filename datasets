@@ -1,209 +1,55 @@
-weather 
-w 0
+what will the weather be the day after tomorrow
+w 2
+what will the weather be tomorrow
+w 1
 how will the weather be tomorrow
 w 1
-how will weather be
-w 0
-how the weather tomorrow
-w 1
-what will the weather be 2 days after tomorrow
-w 3
-what will the weather be 3 days after tomorrow
-w 4
-what will the weather be 4 days after tomorrow
-w 5
-what will the weather be 5 days after tomorrow
-w 6
-what will the weather be 6 days after tomorrow
-w 7
-tomorrow
-1
-the day before today
-minus 1
-4 days before tomorrow
-minus 3
-4 days before today
-minus 4
-what is the weather 
-w 0
-what is the weather like
-w 0
-before 10 days
-minus 10
-before 3 days
-minus 3
-tomorrow before 2 days
-minus 1
-several days
-4
-for several days
-3
-several days
-7
-several days
-2
-yesterday
-minus 1
-tomorrow
-1
-34 days
-34
-what will the weather be like 23 days later
-w 23
-what will the weather be like after 19 days
-w 19
-what weather now
-w 0
-7 days after tomorrow
-8
-after 10 days 
-10
-32 days after 10 days
-42
-3 days ago
-minus 3
-after 3 days
-3
-5 days later
-5
-12 days later
-12
-5 days after tomorrow
-6
-4 days after tomorrow
-5
-11 days after tomorrow
-12
-11 days after today
-12
-4 days after tomorrow
-5
-8 days after tomorrow
-9
-before 321
-minus 321
-before 40 days
-minus 40
-after 43 days
-43
-the day after 1 day
-2
-the day after 2 days
-3
-the day after 3 days
-4
-the day after 4 days
-5
-the day after 5 days
-6
-the day after 6 days
-7
-the day after 7 days
-8
-the day after 8 days
-9
-the day after 10 days
-11
-the day after 11 days
-12
-the day after 12 days
-13
-the day after 13 days
-14
-the day after 14 days
-15
-the day after 15 days
-16
-the day after 16 days
-17
-the day after 17 days
-18
-the day after 18 days
-19
-the day after 19 days
-20
-the day after 20 days
-21
-the day after 21 days
-22
-the day after 22 days
-23
-the day after 23 days
-24
-1
-1
-2
-2
-3
-3
-4
-4
-5
-5
-6
-6
-7
-7
-8
-8
-9
-9
-10
-10
-11
-11
-12
-12
-13
-13
-14
-14
-15
-15
-16
-16
-17
-17
-18
-18
-19
-19
-20
-20
-21
-21
-22
-22
-23
-23
-24
-24
-25
-25
+how was the weather yesterday
+w ms 1
+how was the weather the day before yesterday
+w ms 2
 please tell me the weather
 w 0
-tell us how the weather will be 4 days later
-w 4
-please tell us how the weather will be the day after 5 days
-w 6
-please tell us how the weather will be the day after tomorrow
+tell us how the weather will be
+w 0
+tell the weather tomorrow
 w 2
-10 days later
-10
-33 days
-33
-you should tell me tomorrow weather
-w1
-about 32 days after
-32
+how the weather today
+w 0
+it is rainy then schedule 
+if e w 0 rainy s
+if it is sunny schedule that a b c
+i e w 0 sunny s a b c
+if it is cloudy schedule that it look good for me
+i e w 0 cloudy s it looks good for me
+if it is rainy tomorrow add to schedule that not to go shopping
+i e w 1 rainy s not to go shopping
+please add to schedule that let us go shopping if the sky is sunny
+i e w 0 sunny s let us go shopping
+if it is cloudy tomorrow add to my schedule that probably meet my friend
+i e w 1 cloudy s probably meet my friend
+schedule that i am great man
+s i am great man
+please add to the schedule that you are not wise but adorable
+s you are not wise but adorable
+how is the weather
+w 0
+if it is rainy schedule that good
+i e w 0 rainy s good
+please add to my schedule that i go to
+s i go to
+if the sky is sunny schedule that go outside
+i e w 0 sunny s go outside
+add to the schedule that please add to the schedule that you are not wise but adorable
+s please add to the schedule that you are not wise but adorable
+can you add to my schedule that i will have to go there
+s i will have to go there
+add to the schedule that hello world this is something everything
+s hello world this is something everything
+add to the schedule that 
+s
 =====
-after 7 days
-7
-the day after 8 days
-9
-what will the weather be 10 days later
-w 10
-after 33 days
-33
-before 4 days
-minus 4
+could you tell me the weather
+w 0
+add to the schedule that look
+s look
