@@ -1,55 +1,75 @@
 what will the weather be the day after tomorrow
-w 2
+weather day after tomorrow
 what will the weather be tomorrow
-w 1
+weather tomorrow
 how will the weather be tomorrow
-w 1
+weather tomorrow
 how was the weather yesterday
-w ms 1
+weather yesterday
 how was the weather the day before yesterday
-w ms 2
+weather day before yesterday
 please tell me the weather
-w 0
+weather today
 tell us how the weather will be
-w 0
+weather today
 tell the weather tomorrow
-w 2
+weather tomorrow
 how the weather today
-w 0
+weather today
+sky is sunny the day after tomorrow then scuedule
+if equal weather today sunny day after tomorrow schedule nothing
 it is rainy then schedule 
-if e w 0 rainy s
+if equal weather today rainy schedule
 if it is sunny schedule that a b c
-i e w 0 sunny s a b c
-if it is cloudy schedule that it look good for me
-i e w 0 cloudy s it looks good for me
+if equal weather today sunny schedule something
+if the sky is cloudy schedule that it look good for me
+if equal weather today cloudy schedule something
 if it is rainy tomorrow add to schedule that not to go shopping
-i e w 1 rainy s not to go shopping
+if equal weather tomorrow rainy schedule something
 please add to schedule that let us go shopping if the sky is sunny
-i e w 0 sunny s let us go shopping
+if equal weather today sunny schedule something
 if it is cloudy tomorrow add to my schedule that probably meet my friend
-i e w 1 cloudy s probably meet my friend
+if equal weather tomorrow cloudy schedule something
 schedule that i am great man
-s i am great man
+schedule something
 please add to the schedule that you are not wise but adorable
-s you are not wise but adorable
+schedule something
 how is the weather
-w 0
+weather today
 if it is rainy schedule that good
-i e w 0 rainy s good
+if equal weather today rainy schedule something
 please add to my schedule that i go to
-s i go to
+schedule something
 if the sky is sunny schedule that go outside
-i e w 0 sunny s go outside
+if equal weather today sunny schedule something
 add to the schedule that please add to the schedule that you are not wise but adorable
-s please add to the schedule that you are not wise but adorable
+schedule something
 can you add to my schedule that i will have to go there
-s i will have to go there
+schedule something
 add to the schedule that hello world this is something everything
-s hello world this is something everything
+schedule something
 add to the schedule that 
-s
+schedule something
+schedule
+schedule nothing
+if the sky is sunny today
+if equal weather today sunny
+schedule it clear will be
+schedule something
+tomorrow
+tomorrow
+the day after tomorrow
+day after tomorrow
+today
+today
 =====
 could you tell me the weather
-w 0
+weather today
 add to the schedule that look
-s look
+schedule something
+if it is sunny tomorrow 
+if equal weather tomorrow sunny
+schedule it will be clear
+schedule something
+schedule that 
+schedule something

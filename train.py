@@ -134,7 +134,7 @@ class BatchGenerator(object):
 
 batch_size = 8
 train_batches = BatchGenerator(train_text, batch_size)
-test_batches = BatchGenerator(test_text, 1)
+test_batches = BatchGenerator(test_text, 10)
 
 # Utils
 def id2num(num_id):
@@ -213,8 +213,8 @@ today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
 with tf.Session() as sess:
-  saver.restore(sess, "checkpoints/20171031_model-10000steps.ckpt")
-  # sess.run(tf.global_variables_initializer())
+  # saver.restore(sess, "checkpoints/20171031_model-10000steps.ckpt")
+  sess.run(tf.global_variables_initializer())
   current_learning_rate = 0.03
 
   for step in range(500001):
