@@ -213,7 +213,7 @@ today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
 with tf.Session() as sess:
-  # saver.restore(sess, "checkpoints/20171031_model-10000steps.ckpt")
+  # saver.restore(sess, "checkpoints/20171101_model-5000steps.ckpt")
   sess.run(tf.global_variables_initializer())
   current_learning_rate = 0.03
 
