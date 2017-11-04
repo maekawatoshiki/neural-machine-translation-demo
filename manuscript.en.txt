@@ -18,7 +18,7 @@ Both of programming languages for computers and natural language used by human h
 But there is an absolute difference. That is, as I said, ambiguousness.
 Understanding languages containing ambiguousness is not easy for even human. But in most cases, it doesn't matter.
 It has not been clarified why human can use them.
-But the existence of grammar in natural language means that computers may be able to deal with them.
+But the existence of grammar in natural language means that computers should be able to deal with them.
 Indeed, these years, the accuracy of machine translation services has been improving.
 If you've not used them, don't you give them a try? You'll feel like that they are more useful than you thought.
 Then, how can we make computers be able to abstract the meanings?
