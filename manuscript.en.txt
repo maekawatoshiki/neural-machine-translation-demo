@@ -25,7 +25,7 @@ Then, how can we make computers be able to abstract the meanings?
 These years, AI as we say has been developing because of the technology called "Deep Learning".
 Before explaining Deep Learning, I first explain Neural Network.
 Neural Network is a technology that can approach to any arbitrary functions by imitating the neural circuits of our brain.
-Especially in Hierarchical Neural Network, its internal structure is devided as input layer, hidden layer and output layer.
+Especially in Multilayer Neural Network, its internal structure is devided as input layer, hidden layer and output layer.
 If you have good intuition, maybe you can figure out the 'Deep' of 'Deep Learning' means that there're plural hidden layers.
 Plural hidden layers usually make it so hard to train computers because of enormous amounts of calculation that Deep Learning was less likely to be used.
 But the improvements of computers has made Deep Learning a greatly useful technology.
