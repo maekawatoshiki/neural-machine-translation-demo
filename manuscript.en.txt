@@ -1,7 +1,6 @@
 Hello. I'm Maekawa Toshiki.
 I'm researching on natural language processing and understanding in Chandrasekhar Project.
 Chandrasekhar Project is one of the science clubs in my school.
-Today I'll tell you my research.
 First, look at this sentence. 'HOW WILL THE WEATHER BE'
 OK? If you are human, you are able to understand what this sentence means.
 But this is a difficult problem for computers.
@@ -32,12 +31,20 @@ But the improvements of computers has made Deep Learning a greatly useful techno
 After that, AI, that now can deal with high level tasks, has been developing.
 This time, the Recurrent Neural Network I used in this research is also one of the Deep Learning technologies.
 Recurrent Neural Network can deal with time-series data.
-// already provided background knowledge?
 And I used Seq-to-Seq Model, one of the Recurrent Neural Network, to train a computer.
-This model can output variable length data from variable length input data.
 And it's famous for being used in machine translation these years.
 But this model has a problem, which is so bad at training of long inputs.
 In order to make up for the problem, Attention Mechanism is used.
 This is to train each correspondence between input and output.
 Herewith, the accuracy of training improves.
 And I had the model given input as sentences in natural language and output as the meaning data in formal language train.
+I let a computer train sentences containing what you most ask to AI assistant.
+For example, "How is the weather?" or "tell me my plans tomorrow."
+But I couldn't prepare so many sentences.
+Because I had to do that by myself.
+For that reason, this time about 40 sentences are used to train the computer.
+You probably thought that it's too few. You right, it may not be enough.
+Preparing so many sentences that fits to my purpose is a difficult thing. In addition, the computer takes a long time to train.
+These problems are important issues for the next research.
+OK, I'll explain what has become.
+
