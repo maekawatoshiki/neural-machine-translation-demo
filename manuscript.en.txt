@@ -47,4 +47,6 @@ You probably thought that it's too few. You right, it may not be enough.
 Preparing so many sentences that fits to my purpose is a difficult thing. In addition, the computer takes a long time to train.
 These problems are important issues for the next research.
 OK, I'll explain what has become.
-
+I show some sentences I let the trained computer recognize.
+Of course though there are more succeeded examples and failed examples to recognize, I thought they are good examples and chose them.
+As they show, sentences contained in dataset such as 'how will the weather be' are , of course, recognized correctly.
