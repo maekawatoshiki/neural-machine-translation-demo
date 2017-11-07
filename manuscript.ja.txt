@@ -57,4 +57,5 @@ Deep Learningにより、より高度なことを扱えるようになり、以�
 ですが、'tell me how the weather will be' は正しく認識されています。
 何が言いたいのかというと、まず、'can you tell me how the weather is' と'tell me how the weather is' は 'tell me how the weather' が共通しています。
 そして、その共通している部分に意味の大半が集中しています。
-これは、コンピューターが文章の意味が文章のどの部分に集中しているかということを学習できなかったということです。
+これはコンピューターが、文章のどの部分に文章の意味が集中しているかということを学習できなかったということです。
+
