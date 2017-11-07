@@ -37,11 +37,11 @@ But this model has a problem, which is so bad at training of long inputs.
 In order to make up for the problem, Attention Mechanism is used.
 This is to train each correspondence between input and output.
 Herewith, the accuracy of training improves.
-And I had the model given input as sentences in natural language and output as the meaning data in formal language train.
-I let a computer train sentences containing what you most ask to AI assistant.
-For example, "How is the weather?" or "tell me my plans tomorrow."
+And I trained a computer with the model given input as sentences in natural language and output as the meaning data in formal language.
+I trained the computer with sentences containing what you most ask to AI assistant.
+For example, specific contents like "How is the weather?" or "tell me my plans tomorrow."
 But I couldn't prepare so many sentences.
-Because I had to do that by myself.
+Because I had to make meaning lists of sentences manually.
 For that reason, this time about 40 sentences are used to train the computer.
 You probably thought that it's too few. You right, it may not be enough.
 Preparing so many sentences that fits to my purpose is a difficult thing. In addition, the computer takes a long time to train.
@@ -50,3 +50,12 @@ OK, I'll explain what has become.
 I show some sentences I let the trained computer recognize.
 Of course though there are more succeeded examples and failed examples to recognize, I thought they are good examples and chose them.
 As they show, sentences contained in dataset such as 'how will the weather be' are , of course, recognized correctly.
+Some sentences not contained in dataset are also recognized correctly.
+They shows that the computer is traind nicely.
+On the other hand, there are some samples not recognized correctly.
+'Can you tell me how the weather is' and so on.
+But 'tell me how the weather will be' is recognized correctly.
+What I want to say is, first, 'can you tell me how the weather is' and 'tell me how the weather is ' have 'tell me how the weather' in common.
+And the common part has the most part of meaning of sentence.
+That means the computer couldn't see which part is concentrated the meaning of sentence.
+

@@ -18,10 +18,14 @@ how the weather today
 weather today
 sky is sunny the day after tomorrow then scuedule
 if equal weather today sunny day after tomorrow schedule nothing
+it is cloudy then add to the schedule that
+if equal weather today cloudy schedule something
 it is rainy then schedule 
 if equal weather today rainy schedule
 if it is sunny schedule that a b c
 if equal weather today sunny schedule something
+if it is sunny the day after tomorrow schedule that a b c
+if equal weather day after tomorrow sunny schedule something
 if the sky is cloudy schedule that it look good for me
 if equal weather today cloudy schedule something
 if it is rainy tomorrow add to schedule that not to go shopping
@@ -77,5 +81,7 @@ could you tell me the weather
 weather today
 add to the schedule that look
 schedule something
-if it is sunny the day after tomorrow please tell the weather
-if equal weather day after tomorrow sunny weather today
+if it is sunny please tell the weather
+if equal weather today sunny weather today
+it is rainy then you tell me the weather
+if equal weather today rainy weather today
