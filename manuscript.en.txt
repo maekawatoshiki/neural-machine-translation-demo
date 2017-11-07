@@ -55,7 +55,8 @@ They shows that the computer is traind nicely.
 On the other hand, there are some samples not recognized correctly.
 'Can you tell me how the weather is' and so on.
 But 'tell me how the weather will be' is recognized correctly.
-What I want to say is, first, 'can you tell me how the weather is' and 'tell me how the weather is ' have 'tell me how the weather' in common.
+What I want to say is, first, 'can you tell me how the weather is' and 'tell me how the weather will be' have 'tell me how the weather' in common.
 And the common part has the most part of meaning of sentence.
 That means the computer couldn't see which part is concentrated the meaning of sentence.
+I think that too few setences caused it, but there is another reason.
 
