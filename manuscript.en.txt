@@ -5,8 +5,7 @@ First, look at this sentence. 'HOW WILL THE WEATHER BE'
 OK? If you are human, you are able to understand what this sentence means.
 But this is a difficult problem for computers.
 Because this sentence is just a string, so it has no meaning for computers.
-These years, computers have been developing and getting great results even ordinary people know in the feild of image recognition or voice recognition.
-Self-driving cars or voice input are good examples.
+These years, computers have been developing and getting great results even ordinary people know in the feild of image recognition or voice recognition.  Self-driving cars or voice input are good examples.
 How about the field of 'natural language'? Do you know AI assistants such as Siri or Google Assistant?
 If you've ever used it, you know that they give up understanding meanings of a bit hard questions.
 Then I thought I couldn't do something.
@@ -57,8 +56,11 @@ On the other hand, there are some samples not recognized correctly.
 But 'tell me how the weather will be' is recognized correctly.
 What I want to say is, first, 'can you tell me how the weather is' and 'tell me how the weather will be' have 'tell me how the weather' in common.
 And the common part has the most part of meaning of sentence.
-If I could prepare more sample sentences, probably they make the accuracy of understanding the meaning better.
+That means the computer couldn't see which part is concentrated the meaning of sentence.
+If I could prepare more sample sentences, probably they make the accuracy of understanding of meanings better.
 And I think there's one more problem.
 Humans, especially children, come to be able to learn languages without bothering to tell the meanings.
-However, I bother to prepare lists of meanings to train the computer this time.
-It's distinctly inefficient. But there is no help unless having been clarified the mechanism of humans' languages.
+However, I bothered to prepare lists of meanings to train the computer this time.
+Common sense tells that it's distinctly inefficient.
+Although there is no help unless having been clarified the mechanism of humans' languages,
+in order for computers to really understand languages, a drastic change of technology is required.
