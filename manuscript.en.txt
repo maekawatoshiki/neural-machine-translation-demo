@@ -1,42 +1,50 @@
 Hello. I'm Maekawa Toshiki.
-I'm researching on natural language processing and understanding in Chandrasekhar Project.
+I'm a member of Chandrasekhar Project.
 Chandrasekhar Project is one of the science clubs in my school.
-First, look at this sentence. 'HOW WILL THE WEATHER BE'
+I'm doing research on natural language processing and understanding.
+First, please look at this sentence. 'HOW WILL THE WEATHER BE?'
 OK? If you are human, you are able to understand what this sentence means.
 But this is a difficult problem for computers.
-Because this sentence is just a string, so it has no meaning for computers.
-These years, computers have been developing and getting great results even ordinary people know in the feild of image recognition or voice recognition.  Self-driving cars or voice input are good examples.
-How about the field of 'natural language'? Do you know AI assistants such as Siri or Google Assistant?
-If you've ever used it, you know that they give up understanding meanings of a bit hard questions.
-Then I thought I couldn't do something.
-This was exactly the chance I began to research on making computers abstract meanings of sentences.
+Because this sentence is just a string of words, so it has no meaning for computers.
+These years, computers have been developing.
+And getting great results even ordinary people know. 
+For example, self-driving cars or AI assistant.
+How about the field of 'natural language'? Do you know AI Siri or Google Assistant?
+If you've ever used it, you know that they give up understanding meanings of complicated questions.
+Then I thought I could do something.
+This is why I began to do a research on making computers abstract meanings of sentences.
 OK, now I'll explain how it works.
-First, ambiguous grammar makes it difficult for comuters to abstract the meaning of sentences in natural language.
-Both of programming languages for computers and natural language used by human have each grammar.
+First, ambiguous grammar in natural languege makes it difficult for comuters to abstract the meaning of sentences.
+Natural languages used by humans have grammer.
+So does programming languages for computers.
 But there is an absolute difference. That is, as I said, ambiguousness.
-Understanding languages containing ambiguousness is not easy for even human. But in most cases, it doesn't matter.
-It has not been clarified why human can use them.
+Understanding ambiguous languages is not easy for even human. But in most cases, it doesn't matter.
+It has not been clarified why humans can use ambiguous languages.
 But the existence of grammar in natural language means that computers should be able to deal with them.
 Indeed, these years, the accuracy of machine translation services has been improving.
-If you've not used them, don't you give them a try? You'll feel like that they are more useful than you thought.
+If you've not used them, won't you give them a try? You would feel they are more useful than you thought.
 Then, how can we make computers be able to abstract the meanings?
-These years, AI as we say has been developing because of the technology called "Deep Learning".
-Before explaining Deep Learning, I first explain Neural Network.
+These years, AI has been developing thanks to the technology called "Deep Learning".
+Before explaining Deep Learning, let me explain Neural Network.
 Neural Network is a technology that can approach to any arbitrary functions by imitating the neural circuits of our brain.
-Especially in Multilayer Neural Network, its internal structure is devided as input layer, hidden layer and output layer.
-If you have good intuition, maybe you can figure out the 'Deep' of 'Deep Learning' means that there're plural hidden layers.
-Plural hidden layers usually make it so hard to train computers because of enormous amounts of calculation that Deep Learning was less likely to be used.
+Especially in Multilayer Neural Network, its internal structure is devided into 3 layers.
+If you have good intuition, maybe you can figure out the 'Deep' in 'Deep Learning' means that there're multiple hidden layers.
+Multiple hidden layers need enourmous amount of calculation.
+And usually make it so hard to train computers.
+So deep Learning was less likely to be used.
 But the improvements of computers has made Deep Learning a greatly useful technology.
-After that, AI, that now can deal with high level tasks, has been developing.
+After that, AI has been developing.
 This time, the Recurrent Neural Network I used in this research is also one of the Deep Learning technologies.
 Recurrent Neural Network can deal with time-series data.
 And I used Seq-to-Seq Model, one of the Recurrent Neural Network, to train a computer.
-And it's famous for being used in machine translation these years.
-But this model has a problem, which is so bad at training of long inputs.
+And it's often used for machine translation these years.
+But this model has a problem.
+It is so bad at training of long inputs.
 In order to make up for the problem, Attention Mechanism is used.
 This is to train each correspondence between input and output.
-Herewith, the accuracy of training improves.
-And I trained a computer with the model given input as sentences in natural language and output as the meaning data in formal language.
+Herewith, the accuracy of learning improves.
+I trained a computer with the model.
+And the model was given input as sentences in natural language, and output as the meaning data in formal language.
 I trained the computer with sentences containing what you most ask to AI assistant.
 For example, specific contents like "How is the weather?" or "tell me my plans tomorrow."
 But I couldn't prepare so many sentences.
