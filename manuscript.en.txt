@@ -76,8 +76,7 @@ counted up how many correct outputs the computer could output.
 Then 13 outputs of 20 were correct.
 It's 65%.
 I think it is not bad in the dataset as small as 40 sentences.
-I show some samples given to the trained computer.
-Of course, there are more succeeded samples and failed samples to recognize, but I thought these are good and chose them.
+I show some samples given to the trained computer to recognize.
 As they show, sentences contained in dataset such as 'how will the weather be' are , of course, recognized correctly.
 Some sentences not contained in dataset are also recognized correctly.
 They show that the computer is traind nicely.
