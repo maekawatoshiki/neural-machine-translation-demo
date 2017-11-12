@@ -25,13 +25,13 @@ Indeed, these years, the accuracy of machine translation services has been impro
 If you've not used them, won't you give them a try? You would feel they are more useful than you thought.
 I trained a computer with sentences in natural langauge and the lists of meanings in formal language.
 But maybe you are not sure what the formal language is.
-So I'll explain the specification.
+So I'll explain what it is simply.
 Look at the slide.
 It may be like instructions group rather than formal language.
 For instance, 'weather n' means the weather n days after.
 There are more.
 In this example, the same color part has the same meaning.
-A computer generates this formal language in my research.
+The computer generates this formal language in my research.
 Then, how can we make computers be able to abstract the meanings?
 These years, AI has been developing thanks to the technology called "Deep Learning".
 Before explaining Deep Learning, let me explain Neural Network.
@@ -54,7 +54,7 @@ This time, the Recurrent Neural Network I used in this research is also one of t
 Recurrent Neural Network can deal with time-series data.
 And I used Seq-to-Seq Model, one of the Recurrent Neural Network, to train a computer.
 And it's often used for machine translation these years.
-I trained the computer with sentences and the formal language as I just explained.
+I trained the computer with sentences and the formal language I just explained.
 And the computer will be able to output the proper formal language from input.
 But this model has a problem.
 It is so bad at training of long inputs.
@@ -62,7 +62,7 @@ In order to make up for the problem, Attention Mechanism is used.
 This is to train each correspondence between input and output.
 Herewith, the accuracy of learning improves.
 Most of input sentences contain what most of you ask to AI assistant.
-For example, specific contents like "How is the weather?" or "tell me my plans for tomorrow."
+For example, about specific contents like "How is the weather?" or "tell me my plans for tomorrow."
 But I couldn't prepare so many sentences.
 Because I had to make meaning lists of sentences manually.
 For that reason, I used about 40 sentences to train the computer.
@@ -72,19 +72,21 @@ In addition, it takes a long time to train the computer.
 These problems are important issues for the next research.
 OK, I'll explain the result.
 I gave the trained computer new 20 sentences and 
-counted up how many the correct outputs the computer outputed.
-13 outputs of 20 were correct.
-I show some sentences I let the trained computer recognize.
-Of course though there are more succeeded examples and failed examples to recognize, I thought they are good examples and chose them.
+counted up how many correct outputs the computer could output.
+Then 13 outputs of 20 were correct.
+It's 65%.
+I think it is not bad in the dataset as small as 40 sentences.
+I show some samples given to the trained computer.
+Of course, there are more succeeded samples and failed samples to recognize, but I thought these are good and chose them.
 As they show, sentences contained in dataset such as 'how will the weather be' are , of course, recognized correctly.
 Some sentences not contained in dataset are also recognized correctly.
-They shows that the computer is traind nicely.
+They show that the computer is traind nicely.
 On the other hand, there are some samples not recognized correctly.
 'Can you tell me how the weather is' and so on.
 But 'tell me how the weather will be' is recognized correctly.
-What I want to say is, first, 'can you tell me how the weather is' and 'tell me how the weather will be' have 'tell me how the weather' in common.
+What I want to say is, 'can you tell me how the weather is' and 'tell me how the weather will be' have 'tell me how the weather' in common.
 And the common part has the most part of meaning of sentence.
-That means the computer couldn't see which part is concentrated the meaning of sentence.
+That means the computer couldn't see which part is concentrated on the meaning of sentence.
 If I could prepare more sample sentences, probably they make the accuracy of understanding of meanings better.
 And I think there's one more problem.
 Humans, especially children, come to be able to learn languages without bothering to tell the meanings.
