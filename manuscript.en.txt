@@ -1,4 +1,4 @@
-Hello. I'm Maekawa Toshiki.
+Hello. I'm Toshiki Maekawa.
 I'm a member of Chandrasekhar Project.
 Chandrasekhar Project is one of the science clubs in my school.
 I'm doing research on natural language processing and understanding.
@@ -23,10 +23,26 @@ It has not been clarified why humans can use ambiguous languages.
 But the existence of grammar in natural language means that computers should be able to deal with them.
 Indeed, these years, the accuracy of machine translation services has been improving.
 If you've not used them, won't you give them a try? You would feel they are more useful than you thought.
+I trained a computer with sentences in natural langauge and the lists of meanings in formal language.
+But maybe you are not sure what the formal language is.
+So I'll explain the specification.
+Look at the slide.
+It may be like instructions group rather than formal language.
+For instance, 'weather n' means the weather n days after.
+There are more.
+In this example, the same color part has the same meaning.
+A computer generates this formal language in my research.
 Then, how can we make computers be able to abstract the meanings?
 These years, AI has been developing thanks to the technology called "Deep Learning".
 Before explaining Deep Learning, let me explain Neural Network.
-Neural Network is a technology that can approach to any arbitrary functions by imitating the neural circuits of our brain.
+Neural Network is a technology that can approach any arbitrary functions by imitating the neural circuits of our brain.
+Neural Network is an aggregate of perceptrons.
+In the figure of a simple perceptron, X1, X2 and X3 are called 'input', 
+W1, W2 and W3 are called 'weight',
+and Y is called 'output'.
+The sum total of multiplied each input and weight is the output.
+And correcting the error between the output and the expected output.
+This is how the Neural Network works.
 Especially in Multilayer Neural Network, its internal structure is devided into 3 layers.
 If you have good intuition, maybe you can figure out the 'Deep' in 'Deep Learning' means that there're multiple hidden layers.
 Multiple hidden layers need enourmous amount of calculation.
@@ -38,22 +54,26 @@ This time, the Recurrent Neural Network I used in this research is also one of t
 Recurrent Neural Network can deal with time-series data.
 And I used Seq-to-Seq Model, one of the Recurrent Neural Network, to train a computer.
 And it's often used for machine translation these years.
+I trained the computer with sentences and the formal language as I just explained.
+And the computer will be able to output the proper formal language from input.
 But this model has a problem.
 It is so bad at training of long inputs.
 In order to make up for the problem, Attention Mechanism is used.
 This is to train each correspondence between input and output.
 Herewith, the accuracy of learning improves.
-I trained a computer with the model.
-And the model was given input as sentences in natural language, and output as the meaning data in formal language.
-I trained the computer with sentences containing what you most ask to AI assistant.
-For example, specific contents like "How is the weather?" or "tell me my plans tomorrow."
+Most of input sentences contain what most of you ask to AI assistant.
+For example, specific contents like "How is the weather?" or "tell me my plans for tomorrow."
 But I couldn't prepare so many sentences.
 Because I had to make meaning lists of sentences manually.
-For that reason, this time about 40 sentences are used to train the computer.
-You probably thought that it's too few. You right, it may not be enough.
-Preparing so many sentences that fits to my purpose is a difficult thing. In addition, the computer takes a long time to train.
+For that reason, I used about 40 sentences to train the computer.
+You probably thought that it's too few. You're right, it may not be enough.
+Preparing so many sentences that fits my purpose is difficult. 
+In addition, it takes a long time to train the computer.
 These problems are important issues for the next research.
-OK, I'll explain what has become.
+OK, I'll explain the result.
+I gave the trained computer new 20 sentences and 
+counted up how many the correct outputs the computer outputed.
+13 outputs of 20 were correct.
 I show some sentences I let the trained computer recognize.
 Of course though there are more succeeded examples and failed examples to recognize, I thought they are good examples and chose them.
 As they show, sentences contained in dataset such as 'how will the weather be' are , of course, recognized correctly.
