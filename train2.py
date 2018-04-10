@@ -7,30 +7,69 @@ import collections
 import pickle
 from six.moves.urllib.request import urlretrieve
 import datetime
-from itertools import chain
 
 
-text = open("datasets_origin").read().split('\n')
-text.pop()
-print('Data size %d' % len(text))
-print('data content: %s' % text)
-
-train_text = []
-test_text  = []
-flg = False
-for line in text:
-    if line == '=====':
-        flg = True
-        continue
-    if flg:
-        test_text.append(line)
+# Define language
+def grammar(length):
+  mygrammar = [1, 0, 2]
+  if length <= 0:
+    raise ValueError('Length should be >= 1') 
+  if length == 1:
+    return [0]
+  if length == 2:
+    return [1,0]
+  for i in range(3,length):
+    if length % 3 == 1 and i == length - 1:
+      next_pos = length - 1
     else:
-        train_text.append(line)
-print(train_text)
-print(test_text)
+      next_pos = mygrammar[i-3] + 3
+    mygrammar.append(next_pos)
+  return mygrammar
+
+def encode(text):
+  """ Numberize a sequence """
+  words = text.split()
+  new_text = ''
+  for i in grammar(len(words)):
+    new_text += str(len(words[i]))
+  return new_text
+
+
+
+# Data
+url = 'http://mattmahoney.net/dc/'
+def maybe_download(filename, expected_bytes):
+  """Download a file if not present, and make sure it's the right size."""
+  if not os.path.exists(filename):
+    filename, _ = urlretrieve(url + filename, filename)
+  statinfo = os.stat(filename)
+  if statinfo.st_size == expected_bytes:
+    print('Found and verified %s' % filename)
+  else:
+    print(statinfo.st_size)
+    raise Exception(
+      'Failed to verify ' + filename + '. Can you get to it with a browser?')
+  return filename
+
+filename = maybe_download('text8.zip', 31344016)
+
+def read_data(filename):
+  f = zipfile.ZipFile(filename)
+  for name in f.namelist():
+    return tf.compat.as_str(f.read(name))
+  f.close()
+  
+text = read_data(filename)
+print('Data size %d' % len(text))
+
+
+test_size = 1004
+test_text = text[:test_size]
+train_text = text[test_size:]
+train_size = len(train_text)
 
 # Dictionary
-vocabulary_size = 1000
+vocabulary_size = 50000
 def build_dictionary(words):
   count = collections.Counter(words).most_common(vocabulary_size - 2)
   dictionary = dict()
@@ -42,101 +81,32 @@ def build_dictionary(words):
   reverse_dictionary = dict(zip(dictionary.values(), dictionary.keys()))
   return dictionary, reverse_dictionary
 
-if os.path.exists('dicts/dictionary14.pickle'):
-  with open('dicts/dictionary14.pickle', 'rb') as handle:
+if os.path.exists('dicts/dictionary.pickle'):
+  with open('dicts/dictionary.pickle', 'rb') as handle:
     dictionary = pickle.load(handle)
-  with open('dicts/reverse_dictionary14.pickle', 'rb') as handle:
+  with open('dicts/reverse_dictionary.pickle', 'rb') as handle:
     reverse_dictionary = pickle.load(handle)
 else:
-  words = list(chain.from_iterable([a.split() for a in train_text]))
-  words += list(chain.from_iterable([a.split() for a in test_text]))
-  words += list([a for a in "fgo rgo lgo bgo get".split(' ')])
-  print("-"*99)
-  print(words)
+  words = train_text.split()
   dictionary, reverse_dictionary = build_dictionary(words)
-  with open('dicts/dictionary14.pickle', 'wb') as handle:
+  with open('dicts/dictionary.pickle', 'wb') as handle:
     pickle.dump(dictionary, handle)
-  with open('dicts/reverse_dictionary14.pickle', 'wb') as handle:
+  with open('dicts/reverse_dictionary.pickle', 'wb') as handle:
     pickle.dump(reverse_dictionary, handle)
 
 # BatchGenerator
-MAX_INPUT_SEQUENCE_LENGTH = 50
+MAX_INPUT_SEQUENCE_LENGTH = 10
 MAX_OUTPUT_SEQUENCE_LENGTH = 20
-
-def gen_inst(s):
-    pos = s
-    x = int(pos[0])
-    y = int(pos[1])
-    res = ""
-    t = x + y
-    for i in random.sample(range(0, t), t):
-        if i < x:
-            res += "rgo "
-        else:
-            res += "fgo "
-        # if random.randint(0, 2) == 0:
-        #     if x == 0:
-        #         res += "rgo "
-        #         y -= 1
-        #     else:
-        #         res += "fgo "
-        #         x -= 1
-        # else:
-        #     if y == 0:
-        #         res += "fgo "
-        #         x -= 1
-        #     else:
-        #         res += "rgo "
-        #         y -= 1
-    # print(res)
-    res += "get"
-    return res
-
-
-
-# 26(alpha) + 10(numeric) + 1(space) + 1(period) = 38
-dic_len = len(dictionary) 
-PAD_ID = dic_len
-GO_ID  = dic_len + 1
-EOS_ID = dic_len + 2
-NDS    = dic_len + 3
-
-def char2limit(c):
-    a = c.lower()
-    if a.isalpha():
-        return 0 + ord(a) - ord('a')
-    elif a.isdigit():
-        return ord(a) - ord('0') + 26
-    elif a == ' ':
-        return 36
-    elif a == '.':
-        return 37
-    else:
-        return '?'
-
+PAD_ID = 10
+GO_ID = 11
+EOS_ID = 12
 
 class BatchGenerator(object):
-  def __init__(self, text, batch_size):
-    questions = []
-    answers = []
-    i = 0
-    area = ""
-    for t in text:
-        if i < 5:
-            area += t + " "
-            i += 1
-        elif i == 5:
-            questions.append( [s.lower() for s in (area + t).split()] )
-            area = ""
-            i += 1
-        elif i == 6:
-            answers.append( [s.lower() for s in t.split()] )
-            i = 0
-    
-    self._questions = questions
-    self._answers   = answers
-
+  def __init__(self, text, batch_size, global_id = 0):
+    self._words = text.split()
+    self._text_size = len(text)
     self._batch_size = batch_size
+    self._global_id = global_id
   
   def next(self):
     input_sequences = list()
@@ -146,21 +116,15 @@ class BatchGenerator(object):
     weights = list()
 
     for i in range(self._batch_size):
-      choice = random.randint(0, len(self._questions) - 1)
-      input_words = self._questions[choice]
-      # print(input_words)
+      length = random.randint(1,MAX_INPUT_SEQUENCE_LENGTH)
+      input_words = self._words[self._global_id:self._global_id+length]
       input_word_ids = [word2id(word) for word in input_words]
-      # print(input_words) 
+      
       # reverse list and add padding
       reverse_input_word_ids = [0]*(MAX_INPUT_SEQUENCE_LENGTH-len(input_word_ids)) + input_word_ids[::-1]
       input_sequence = ' '.join(input_words)
-      label_sequence = self._answers[choice]
-      label_sequence = [s.lower() for s in gen_inst(label_sequence).split(' ')]
-      # print(label_sequence)
-      # input_word_ids = [word2id(word) for word in input_words]
-      label_word_ids = [word2id(num) for num in label_sequence]
-      # print("success")
-      # print(label_word_ids)
+      label_sequence = encode(input_sequence)
+      label_word_ids = [int(num) for num in label_sequence]
       weight = [1.0]*len(label_word_ids)
 
       # append to lists
@@ -170,40 +134,35 @@ class BatchGenerator(object):
       labels.append(label_word_ids + [EOS_ID] + [PAD_ID]*(MAX_OUTPUT_SEQUENCE_LENGTH-len(label_word_ids)))
       weights.append(weight + [1.0] + [0.0]*((MAX_OUTPUT_SEQUENCE_LENGTH-len(weight))))
 
+      # Update global_id
+      new_global_id = self._global_id + length
+      if new_global_id > len(self._words) - self._batch_size*MAX_INPUT_SEQUENCE_LENGTH:
+        self._global_id = 0
+      else:
+        self._global_id = new_global_id
+
     return input_sequences, np.array(encoder_inputs).T, np.array(decoder_inputs).T, np.array(labels).T, np.array(weights).T
 
-batch_size = 8
+batch_size = 16
 train_batches = BatchGenerator(train_text, batch_size)
-test_batches = BatchGenerator(test_text, 10)
+test_batches = BatchGenerator(test_text, 1)
 
 # Utils
 def id2num(num_id):
-  # if 0 <= num_id and num_id <= 25:
-  #   return chr(num_id + ord('a'))
-  # if 26 <= num_id and num_id <= 35:
-  #   return chr(num_id - 26 + ord('0'))
-  # if num_id == 36:
-  #   return ' '
-  # if num_id == 37:
-  #   return '.'
+  if num_id < 10:
+    return str(num_id)
   if num_id == PAD_ID:
     return 'P'
   if num_id == GO_ID:
     return 'G'
   if num_id == EOS_ID:
     return 'E'
-  a = reverse_dictionary.get(num_id, "?")
-  return a + ' '
-  # return 'O'
 
 def sampling(predictions):
   return ''.join([id2num(np.argmax(onehot[0])) for onehot in predictions])
 
 def word2id(word):
     return dictionary.get(word, 0)
-
-def id2word(id):
-    return reverse_dictionary.get(id, "")
 
 # Model
 lstm_size = 256
@@ -231,12 +190,12 @@ def construct_graph(use_attention=True):
                                                           decoder_inputs,
                                                           cell,
                                                           vocabulary_size, # num_encoder_symbols
-                                                          NDS, # num_decoder_symbols
+                                                          13, # num_decoder_symbols
                                                           128, # embedding_size
                                                           feed_previous=feed_previous # False during training, True during testing
                                                           )
   loss = tf.contrib.legacy_seq2seq.sequence_loss(outputs, labels, weights) 
-  predictions = tf.stack([tf.nn.relu(output) for output in outputs])
+  predictions = tf.stack([tf.nn.softmax(output) for output in outputs])
 
   tf.summary.scalar('learning rate', learning_rate)
   tf.summary.scalar('loss', loss)
@@ -244,18 +203,21 @@ def construct_graph(use_attention=True):
 
   return encoder_inputs, decoder_inputs, labels, weights, learning_rate, feed_previous, outputs, states, loss, predictions, merged
 
-encoder_inputs, decoder_inputs, labels, weights, learning_rate, feed_previous, outputs, states, loss, predictions, merged = construct_graph()
-optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
-saver = tf.train.Saver()
+graph = tf.Graph()
+with graph.as_default():
+  encoder_inputs, decoder_inputs, labels, weights, learning_rate, feed_previous, outputs, states, loss, predictions, merged = construct_graph()
+  optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(loss)
+  saver = tf.train.Saver()
 
 # Run session
 today_dt = datetime.date.today()
 today = today_dt.strftime("%Y%m%d")
 
-with tf.Session() as sess:
-  # saver.restore(sess, "checkpoints/20171107_model-85000steps.ckpt")
-  sess.run(tf.global_variables_initializer())
-  current_learning_rate = 0.02
+with tf.Session(graph=graph) as sess:
+  sess.run(tf.initialize_all_variables())
+  train_writer = tf.summary.FileWriter('tensorboard/train', graph)
+  test_writer  = tf.summary.FileWriter('tensorboard/test', graph)
+  current_learning_rate = 0.03
 
   for step in range(500001):
     feed_dict = dict()
@@ -272,7 +234,10 @@ with tf.Session() as sess:
 
     _, current_train_loss, current_train_predictions, train_summary = sess.run([optimizer, loss, predictions, merged], feed_dict=feed_dict)
 
-    if step % 20 == 0:
+    train_writer.add_summary(train_summary, step)
+    train_writer.flush()
+    
+    if step % 1000 == 0:
       print('Step %d:' % step)
       print('Training set:')
       print('  Loss       : ', current_train_loss)
@@ -297,8 +262,10 @@ with tf.Session() as sess:
       print('  Correct output   : ', ''.join([id2num(n) for n in current_test_labels.T[0]]))
       print('  Generated output : ', sampling(current_test_predictions))
       print('='*50)
+      test_writer.add_summary(test_summary, step)
+      test_writer.flush()
         
-    if step % 5000 == 0:
+    if step % 10000 == 0:
         # Save the variables to disk.
         save_path = saver.save(sess, "checkpoints/{}_model-{}steps.ckpt".format(today, step))
         print("Model saved in file: %s" % save_path)

@@ -1,0 +1,55 @@
+what will the weather be the day after tomorrow
+w 2
+what will the weather be tomorrow
+w 1
+how will the weather be tomorrow
+w 1
+how was the weather yesterday
+w ms 1
+how was the weather the day before yesterday
+w ms 2
+please tell me the weather
+w 0
+tell us how the weather will be
+w 0
+tell the weather tomorrow
+w 2
+how the weather today
+w 0
+it is rainy then schedule 
+if e w 0 rainy s
+if it is sunny schedule that a b c
+i e w 0 sunny s a b c
+if it is cloudy schedule that it look good for me
+i e w 0 cloudy s it looks good for me
+if it is rainy tomorrow add to schedule that not to go shopping
+i e w 1 rainy s not to go shopping
+please add to schedule that let us go shopping if the sky is sunny
+i e w 0 sunny s let us go shopping
+if it is cloudy tomorrow add to my schedule that probably meet my friend
+i e w 1 cloudy s probably meet my friend
+schedule that i am great man
+s i am great man
+please add to the schedule that you are not wise but adorable
+s you are not wise but adorable
+how is the weather
+w 0
+if it is rainy schedule that good
+i e w 0 rainy s good
+please add to my schedule that i go to
+s i go to
+if the sky is sunny schedule that go outside
+i e w 0 sunny s go outside
+add to the schedule that please add to the schedule that you are not wise but adorable
+s please add to the schedule that you are not wise but adorable
+can you add to my schedule that i will have to go there
+s i will have to go there
+add to the schedule that hello world this is something everything
+s hello world this is something everything
+add to the schedule that 
+s
+=====
+could you tell me the weather
+w 0
+add to the schedule that look
+s look
